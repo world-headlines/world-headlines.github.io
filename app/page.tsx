@@ -11,7 +11,7 @@ function getCountryDescElement(countryCode:string, countryName:string):ReactNode
   return (
     <div className="country-desc" key={"desc-element-"+countryCode}>
       <a href={"/"+countryCode}>
-        <Image src={flag_src} alt={flag_alt} width={180} height={135}/>
+        <img src={flag_src} alt={flag_alt} width={180} height={135}/>
         <p>Click to catch up latest headline news from {countryName}</p>
       </a>
     </div>
