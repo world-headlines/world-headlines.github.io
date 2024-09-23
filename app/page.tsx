@@ -6,7 +6,7 @@ import { ReactNode } from "react";
 
 function getCountryDescElement(countryCode:string, countryName:string):ReactNode {
 
-  let flag_src = "/flags/"+countryCode+".svg"
+  let flag_src = "/flags/"+countryCode.toLowerCase()+".svg"
   let flag_alt = "link for "+countryName+"'s headline"
   return (
     <div className="country-desc" key={"desc-element-"+countryCode}>
