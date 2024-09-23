@@ -49,8 +49,9 @@ async function getNewsItem(article: NewsArticle): Promise<ReactNode>{
     })
 }
 
+
 export default async function Page({ params }: { params: { country_code: string } }) {
-    let code: string = params.country_code.charAt(0).toUpperCase() + params.country_code.charAt(1).toUpperCase()
+    let code: string = params.country_code.toUpperCase()//params.country_code.charAt(0).toUpperCase() + params.country_code.charAt(1).toUpperCase()
 
     let data = await getGlobalData()
     console.log(code)
@@ -76,8 +77,13 @@ export default async function Page({ params }: { params: { country_code: string 
                         resolve((
                             <>
                                 <section className="headline-info">
-                                    <p>latest headline news from {v.country}.</p>
-                                    <p>The headline updated at {headline.last_update}</p>
+                                    <section className="headline-desc">
+                                        <Image src={"/flags/"+code.toLowerCase()+".svg"} alt={""} width={100} height={75}/>
+                                        <ul>
+                                            <li>Latest headline news from {v.country}.</li>
+                                            <li>The headline updated at {headline.last_update}</li>
+                                        </ul>
+                                    </section>
                                 </section>
                                 <main className="news-section">
                                     {news}

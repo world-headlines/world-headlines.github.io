@@ -55,7 +55,11 @@ export default async function RootLayout({
     <html>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <header>
-            <h1><a href="/">World Headlines</a></h1>
+            <h1>
+              <a href="/">
+                World Headlines
+              </a>
+            </h1>
             <nav>
                 <ul>
                   {await getCountryList()}
