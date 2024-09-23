@@ -4,7 +4,6 @@ import "./globals.css";
 import getGlobalData from "./app.data";
 import { ReactNode } from "react";
 import Script from "next/script";
-import { GlobalData } from "./models";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -19,7 +18,10 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   title: "World Headlines - Global News in Your Language",
-  description: "Check out headlines from around the world. Stay updated with global news from the US, China, Europe, and more.",
+  description: "Check out headlines from around the world. Stay updated with global news from the United States, " +
+  "China, India, German, Franch, Japan, Brasil, Russia, Korea, United Kingdom, Taiwan, and more. " +
+  "World Headlines delivers the latest global news directly. " +
+  "With the translation service, you can explore headlines from various countries without any language barriers.",
 };
 
 async function getCountryList(): Promise<ReactNode[]> {
