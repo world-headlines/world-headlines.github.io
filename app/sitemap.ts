@@ -1,10 +1,9 @@
 import type { MetadataRoute } from 'next'
-import { GlobalData } from './models'
-import getGlobalData from './app.data'
+import { getCountryCodes } from './services'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
-    let country_codes: string[] = (await getGlobalData()).countryCodes
+    let countryCodes: string[] = await getCountryCodes()
     let prefix:string = "https://world-headlines.github.io/"
 
     
@@ -17,7 +16,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         }
     ]
 
-    await Promise.all(country_codes.map(async (val, idx, arr)=>{
+    await Promise.all(countryCodes.map(async (val, idx, arr)=>{
         result.push(
             {
                 url: prefix+val,

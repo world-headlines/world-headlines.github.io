@@ -1,8 +1,5 @@
-import Image from "next/image";
-import styles from "./page.module.css";
-import getGlobalData from "./app.data";
-import { GlobalData } from "./models";
 import { ReactNode } from "react";
+import { getCountryCodes, getHeadlineMetadata } from "./services";
 
 function getCountryDescElement(countryCode:string, countryName:string):ReactNode {
 
@@ -19,34 +16,36 @@ function getCountryDescElement(countryCode:string, countryName:string):ReactNode
 }
 
 export default async function Home() {
-  let globalData: GlobalData = await getGlobalData()
+  
+  const countryCodes = await getCountryCodes()
+
   let countryDescElements: ReactNode[] = []
   
-  await Promise.all(globalData.countryCodes.map(async (val, idx, arr)=>{
-    let code = val
-    let country = globalData.headlineMap.get(code)?.country
-    
-    if(country == undefined)
-      country = ''
+  await Promise.all(countryCodes.map(
+    async (val, idx, arr) => {
+      const headlineMetadata = await getHeadlineMetadata(val)
+      const element = getCountryDescElement(headlineMetadata.countryCode, headlineMetadata.countryName)
+      countryDescElements.push(element)
+    }
+  ))
 
-    countryDescElements.push(
-      getCountryDescElement(code, country)
-    )
-  }))
+  const descStr = "World Headlines delivers the latest global news directly. With the translation service, you can explore headlines from various countries without any language barriers."
+  
+  let result = (
+    <>
+      <main className="main-desc">
+        <img src={"/icon.jpg"} alt="world-headlines icon" width={180} height={180}/>
+        <p>{descStr}</p>
+      </main>
+      <section className="country-desc-container">
+        {countryDescElements}
+      </section>
+    </>
+  )
 
-  let desc_str = "World Headlines delivers the latest global news directly. With the translation service, you can explore headlines from various countries without any language barriers."
-  return new Promise((resolve, reject)=>{
-    
-    resolve(
-      <>
-        <main className="main-desc">
-          <img src={"/icon.jpg"} alt="world-headlines icon" width={180} height={180}/>
-          <p>{desc_str}</p>
-        </main>
-        <section className="country-desc-container">
-          {countryDescElements}
-        </section>
-      </>
-    )
-  });
+  return new Promise(
+    (resolve, reject)=>{
+      resolve(result)
+    }
+  );
 }

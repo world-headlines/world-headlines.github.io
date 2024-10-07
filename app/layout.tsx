@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import getGlobalData from "./app.data";
 import { ReactNode } from "react";
 import Script from "next/script";
+import { getCountryCodes, getHeadlineMetadata } from "./services";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -24,26 +24,26 @@ export const metadata: Metadata = {
   "With the translation service, you can explore headlines from various countries without any language barriers.",
 };
 
-async function getCountryList(): Promise<ReactNode[]> {
+function getCountryNameElement(countryCode:string, countryName:string): ReactNode {
+  return <li key={countryCode}><a href={'/'+countryCode}>{countryName}</a></li>
+}
 
-  let countryList = []
+async function getCountryNameElementList(): Promise<ReactNode[]> {
+
+  const countryCodes = await getCountryCodes()
+
+  let result: ReactNode[] = []
+  await Promise.all(countryCodes.map(
+    async (val, idx, arr) => {
+      const headlineMetadata = await getHeadlineMetadata(val)
+      const countryNameElement = getCountryNameElement(headlineMetadata.countryCode, headlineMetadata.countryName)
+      result.push(countryNameElement)
+    }
+  ))
 
   return new Promise(
     async (resolve, reject) => {
-
-      let data = await getGlobalData()
-
-      data.countryCodes.forEach(
-        (value, index, array) => {
-          let name = data.headlineMap.get(value)?.country
-          countryList.push(
-            <li key={value}><a href={'/'+value}>{name}</a></li>
-          )
-          if(index == array.length-1){
-            resolve(countryList)
-          }
-        }
-      )
+      resolve(result)
     }
   )
 }
@@ -53,7 +53,10 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
+
+  let countryElementList: ReactNode[] = await getCountryNameElementList()
+
+  let result = (
     <html>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <header>
@@ -64,7 +67,7 @@ export default async function RootLayout({
             </h1>
             <nav>
                 <ul>
-                  {await getCountryList()}
+                  {countryElementList}
                 </ul>
             </nav>
         </header>
@@ -75,4 +78,10 @@ export default async function RootLayout({
       </body>
     </html>
   );
+
+  return new Promise(
+    (resolve, reject) => {
+      resolve(result)
+    }
+  )
 }
