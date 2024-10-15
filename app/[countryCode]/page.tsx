@@ -51,7 +51,7 @@ function getNewsArticleElement(newsArticle:NewsArticle, noImageUrl:string): Reac
             {image_tag}
             <div className="news-details">
                 <h3><a href={newsArticle.url} target="_blank">{newsArticle.title}</a></h3>
-                <p>{newsArticle.publishDate}</p>
+                <p className="article-publish-date">{newsArticle.publishDate}</p>
                 <p>{newsArticle.description}</p>
                 <ul className="sources">
                     <li><a href="#">{newsArticle.source}</a></li>
@@ -83,7 +83,7 @@ export default async function Page({ params }: { params: { countryCode: string }
                     <Image src={"/flags/"+countryCode+".svg"} alt={""} width={100} height={75}/>
                     <ul>
                         <li>Latest headline news from {headlineMetadata.countryName}.</li>
-                        <li>The headline updated at {headlineMetadata.lastUpdate}</li>
+                        <li>The headline updated at <span id="last-update-headline">{headlineMetadata.lastUpdate}</span></li>
                     </ul>
                 </section>
             </section>

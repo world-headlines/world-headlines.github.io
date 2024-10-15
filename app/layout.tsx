@@ -73,6 +73,7 @@ export default async function RootLayout({
         </header>
         <section className="translator-section" id="google_translate_element"></section>
         {children}
+        <Script src="/js/common.js"/>
         <Script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"/>
         <Script src="/js/google_translate.js"/>
       </body>

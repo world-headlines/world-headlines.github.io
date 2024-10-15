@@ -1,5 +1,6 @@
 import localFont from "next/font/local";
 import "./styles.css";
+import Script from "next/script";
 
 const geistSans = localFont({
   src: "../fonts/GeistVF.woff",
@@ -18,5 +19,8 @@ export default async function NewsLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return children;
+  return <>
+    {children}
+    <Script src="/js/timeformat.js"/>
+  </>;
 }
