@@ -4,17 +4,17 @@
 
 function changeToBrowserTime(utcTime){
     // utcTime: "YYYY-MM-DD HH:mm:ss"
-    const year = parseInt(utcTime.substr(0, 4))
-    const monthIdx = parseInt(utcTime.substr(5, 2))
-    const day = parseInt(utcTime.substr(8, 2))
-    const hour = parseInt(utcTime.substr(11, 2))
-    const mins = parseInt(utcTime.substr(14, 2))
-    const sec = parseInt(utcTime.substr(17, 2))
-
+    let year = parseInt(utcTime.substr(0, 4))
+    let monthIdx = parseInt(utcTime.substr(5, 2)) - 1
+    let day = parseInt(utcTime.substr(8, 2))
+    let hour = parseInt(utcTime.substr(11, 2))
+    let mins = parseInt(utcTime.substr(14, 2))
+    let sec = parseInt(utcTime.substr(17, 2))
     
     const timeoffsetMinutes = new Date().getTimezoneOffset()
 
-    return new Date(year, monthIdx, day, hour, mins + timeoffsetMinutes, sec)
+    const browserTime = new Date(year, monthIdx, day, hour, mins - timeoffsetMinutes, sec)
+    return browserTime
 }
 
 // #last-update-headline
