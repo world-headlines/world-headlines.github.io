@@ -18,10 +18,16 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   title: "World Headlines - Global News in Your Language",
-  description: "Check out headlines from around the world. Stay updated with global news from the United States, " +
-  "China, India, German, Franch, Japan, Brasil, Russia, Korea, United Kingdom, Taiwan, and more. " +
-  "World Headlines delivers the latest global news directly. " +
-  "With the translation service, you can explore headlines from various countries without any language barriers.",
+  description: "Wolrd Headline with translation. "+
+  "번역이 포함된 세계 주요 뉴스 헤드라인입니다." +
+  "世界頭條新聞及翻譯。"+
+  "世界头条新闻及翻译。" +
+  "翻訳付き世界のトップニュース. " +
+  "Tiêu đề tin tức thế giới có bản dịch." +
+  "Мировые новости с переводами. "+
+  "Weltweite Schlagzeilen mit Übersetzungen."+
+  "Titres de l'actualité mondiale avec traductions. "+
+  "عناوين الأخبار العالمية مع الترجمة."
 };
 
 function getCountryNameElement(countryCode:string, countryName:string): ReactNode {
