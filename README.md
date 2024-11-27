@@ -1,1 +1,0 @@
-# world-headlines.github.io
